@@ -1,4 +1,18 @@
 import subprocess
+import os
+
+# List of directory paths to create
+directories = [
+    "OpenVCT/anatomy/vctx",
+    "OpenVCT/anatomy/xml",
+    "OpenVCT/deform/vctx",
+    "OpenVCT/deform/xml",
+    "OpenVCT/inserter/vctx",
+    "OpenVCT/inserter/xml",
+    "OpenVCT/noise/proj",
+    "OpenVCT/raytracing/xml",
+    "OpenVCT/raytracing/proj"
+]
 
 def compile_code(command):
     try:
@@ -21,9 +35,14 @@ def compile_code(command):
 
 if __name__ == "__main__":
     
-    #Compile C++ version of code
+    # Compile C++ version of code
     print("Compiling Anatomy Code...")
     compile_code("OpenVCT/anatomy/Makefile")
     
     print("Compiling RayTracing Code...")
     compile_code("OpenVCT/raytracing/Makefile")
+
+    # Create directories to save xml and outputs
+    for directory in directories:
+        os.makedirs(directory, exist_ok=True)
+

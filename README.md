@@ -45,11 +45,11 @@ sudo apt install docker.io
 sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl restart docker
 
-# 7. See if your GPU is working on docker (This command should show your GPU)
-docker run --gpus all nvidia/cuda:12.2.0-base-ubuntu22.04 nvidia-smi
-
-# 8. Add your user to docker group
+# 7. Add your user to docker group
 sudo usermod -aG docker $USER
+
+# 8. See if your GPU is working on docker (This command should show your GPU)
+docker run --gpus all nvidia/cuda:12.2.0-base-ubuntu22.04 nvidia-smi
 
 # 9. Run the following command on your OPENVCT_PIPELINE directory: 
 docker build -t openvct .

@@ -26,22 +26,38 @@ OpenVCT is containerized for simplicity. Follow the steps below to get started:
 # 1. Install CUDA Toolkit:
 https://developer.nvidia.com/cuda-toolkit
 
-# 2. Install WSL* (Linux distro for Windows) and Docker Desktop:
+#2. nstall NVIDIA Container Toolkit
+https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
+
+# 3. Install WSL* (Linux distro for Windows) and Docker Desktop:
 https://learn.microsoft.com/en-us/windows/wsl/install
 https://www.docker.com/
 
 ## *Skip the WSL installation for Linux SO
 
-# 3. Clone our repository:
+# 4. Clone our repository:
 git clone https://github.com/bbarufaldi/OpenVCT_Pipeline.git
 
-# 4. Run the following command on your OPENVCT_PIPELINE directory: 
+# 5. Install docker 
+sudo apt install docker.io
+
+# 6. Configure NVIDIA runtine on Docker 
+sudo nvidia-ctk runtime configure --runtime=docker
+sudo systemctl restart docker
+
+# 7. See if your GPU is working on docker (This command should show your GPU)
+docker run --gpus all nvidia/cuda:12.2.0-base-ubuntu22.04 nvidia-smi
+
+# 8. Add your user to docker group
+sudo usermod -aG docker $USER
+
+# 9. Run the following command on your OPENVCT_PIPELINE directory: 
 docker build -t openvct .
 
-# 5. Compile the OpenVCT code:
+# 10. Compile the OpenVCT code:
 docker run -it --ipc=host -v ${PWD}:/app/ --gpus all openvct python3 compile_pipeline.py
 
-# 6. Create your 'own scripts' to run the steps of our pipeline (follow steps described below). Execute the pipeline using the command:
+# 11. Create your 'own scripts' to run the steps of our pipeline (follow steps described below). Execute the pipeline using the command:
 docker run -it --ipc=host -v ${PWD}:/app/ --gpus all openvct python3 example.py
 ```
 
